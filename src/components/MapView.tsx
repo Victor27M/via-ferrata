@@ -1,126 +1,191 @@
-import { AttributionControl, GeolocateControl, Map as MLMap, NavigationControl, setWorkerUrl, type GeoJSONSource } from 'maplibre-gl';
+import { AttributionControl, GeolocateControl, Map as MLMap, NavigationControl, setWorkerUrl, type ExpressionSpecification, type GeoJSONSource } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import { useEffect, useRef } from 'react';
 import type { Ferrata } from '../data/types.ts';
+import { centroid, regionRing, spread } from '../geo.ts';
 import { DEM_MAXZOOM, DEM_TEMPLATE, STYLE_URL } from '../tiles.ts';
-import { GRADE_COLORS, maxGrade } from '../ui.tsx';
+import { maxGrade } from '../ui.tsx';
 
 // MapLibre resolves its worker relative to its own module, which Vite's bundling breaks.
 setWorkerUrl(workerUrl);
 
 const ROMANIA: [[number, number], [number, number]] = [[20.2, 43.6], [29.8, 48.3]];
+/** From this zoom, multi-route sites split into one pin per route inside a region outline. */
+const ROUTES_ZOOM = 14;
+const WHITE = '#ffffff';
+const BLACK = '#000000';
+const FONT = ['Noto Sans Regular'];
+
+export interface Selection {
+  siteId: string;
+  routeId?: string;
+}
 
 interface Props {
   sites: Ferrata[]; // already filtered
+  matches: Map<string, Set<string>>; // siteId → matching route ids
+  doneRoutes: Set<string>;
   doneSites: Set<string>;
-  selectedId: string | null;
+  selected: Selection | null;
   terrain3d: boolean;
-  onSelect: (id: string | null) => void;
+  onSelect: (s: Selection | null) => void;
 }
 
-// combined grades take the harder letter's colour (A/B → B), matching the badges
-const gradeColor = ['step', ['get', 'maxGrade'], GRADE_COLORS.A, 1.5, GRADE_COLORS.B, 2.5, GRADE_COLORS.C, 3.5, GRADE_COLORS.D, 4.5, GRADE_COLORS.E] as const;
+const letterOf = (g: string) => g.split('/').at(-1)!;
+/** Sites whose routes have their own start coordinates get split into route pins when zoomed in. */
+const routePoints = (s: Ferrata) => s.routes.filter((r) => r.coords);
+const isSpread = (s: Ferrata) => routePoints(s).length >= 2;
 
-function toGeoJSON(sites: Ferrata[], done: Set<string>): GeoJSON.FeatureCollection {
-  return {
-    type: 'FeatureCollection',
-    features: sites.map((s) => ({
-      type: 'Feature',
-      geometry: { type: 'Point', coordinates: s.coords },
-      properties: { id: s.id, name: s.name, maxGrade: Math.max(...s.routes.map((r) => r.gradeMin)), letter: maxGrade(s).split('/').at(-1), done: done.has(s.id) },
-    })),
-  };
+type FC = GeoJSON.FeatureCollection;
+const fc = (features: GeoJSON.Feature[]): FC => ({ type: 'FeatureCollection', features });
+const point = (coordinates: [number, number], properties: Record<string, unknown>): GeoJSON.Feature =>
+  ({ type: 'Feature', geometry: { type: 'Point', coordinates }, properties });
+
+function sitesData(sites: Ferrata[], doneSites: Set<string>): FC {
+  return fc(sites.map((s) => point(s.coords, { id: s.id, name: s.name, letter: letterOf(maxGrade(s)), done: doneSites.has(s.id), spread: isSpread(s) })));
 }
 
-/** White-on-transparent check mark used inside completed pins. */
+function routesData(sites: Ferrata[], matches: Props['matches'], doneRoutes: Set<string>): FC {
+  return fc(sites.filter(isSpread).flatMap((s) => {
+    const rs = routePoints(s);
+    const pos = spread(rs.map((r) => r.coords!));
+    return rs.flatMap((r, i) => (matches.get(s.id)?.has(r.id)
+      ? [point(pos[i], { id: r.id, siteId: s.id, name: `${r.name} · ${r.grade}`, letter: letterOf(r.grade), done: doneRoutes.has(r.id) })]
+      : []));
+  }));
+}
+
+function regionsData(sites: Ferrata[]): FC {
+  return fc(sites.filter(isSpread).flatMap((s) => {
+    const ring = regionRing(routePoints(s).map((r) => r.coords!));
+    const top = ring.reduce((a, b) => (b[1] > a[1] ? b : a));
+    return [
+      { type: 'Feature', geometry: { type: 'Polygon', coordinates: [ring] }, properties: { siteId: s.id } } as GeoJSON.Feature,
+      point([centroid(ring)[0], top[1]], { siteId: s.id, label: s.name.toUpperCase(), kind: 'label' }),
+    ];
+  }));
+}
+
+/** Check mark for completed pins (black on the white pin). */
 function checkImage() {
   const c = document.createElement('canvas');
   c.width = c.height = 40;
   const ctx = c.getContext('2d')!;
-  ctx.strokeStyle = '#0e1311';
-  ctx.lineWidth = 6;
+  ctx.strokeStyle = BLACK;
+  ctx.lineWidth = 5;
   ctx.lineCap = ctx.lineJoin = 'round';
   ctx.beginPath();
-  ctx.moveTo(10, 21);
-  ctx.lineTo(17, 28);
-  ctx.lineTo(30, 13);
+  ctx.moveTo(11, 21);
+  ctx.lineTo(17, 27);
+  ctx.lineTo(29, 14);
   ctx.stroke();
   return ctx.getImageData(0, 0, 40, 40);
 }
 
-export function MapView({ sites, doneSites, selectedId, terrain3d, onSelect }: Props) {
+/** One pin style everywhere: open pin = black with white ring + grade letter; done = solid white with a check. */
+function addPins(m: MLMap, id: string, source: string, filter: ExpressionSpecification, zoom: { minzoom?: number; maxzoom?: number }, small = false) {
+  const done: ExpressionSpecification = ['all', filter, ['get', 'done']];
+  const open: ExpressionSpecification = ['all', filter, ['!', ['get', 'done']]];
+  // route pins grow as you zoom in, so dense walls stay readable at every zoom
+  const radius: ExpressionSpecification = small ? ['interpolate', ['linear'], ['zoom'], 14, 7, 16, 9.5, 18, 13] : ['interpolate', ['linear'], ['zoom'], 6, 9, 14, 12];
+  m.addLayer({ id, type: 'circle', source, filter, ...zoom,
+    paint: {
+      'circle-radius': radius,
+      'circle-color': ['case', ['get', 'done'], WHITE, BLACK],
+      'circle-stroke-color': WHITE,
+      'circle-stroke-width': 1.75,
+    } });
+  m.addLayer({ id: `${id}-check`, type: 'symbol', source, filter: done, ...zoom,
+    layout: { 'icon-image': 'check', 'icon-size': small ? ['interpolate', ['linear'], ['zoom'], 14, 0.6, 18, 1.1] : 0.95, 'icon-allow-overlap': true } });
+  m.addLayer({ id: `${id}-letter`, type: 'symbol', source, filter: open, ...zoom,
+    layout: { 'text-field': ['get', 'letter'], 'text-font': FONT, 'text-size': small ? ['interpolate', ['linear'], ['zoom'], 14, 9, 18, 14] : 12, 'text-allow-overlap': true },
+    paint: { 'text-color': WHITE } });
+}
+
+function addLabels(m: MLMap, id: string, source: string, filter: ExpressionSpecification, zoom: { minzoom?: number; maxzoom?: number }) {
+  m.addLayer({ id, type: 'symbol', source, filter, ...zoom,
+    layout: { 'text-field': ['get', 'name'], 'text-font': FONT, 'text-size': 12, 'text-variable-anchor': ['top', 'right', 'left', 'bottom'],
+      'text-radial-offset': 1.25, 'text-justify': 'auto', 'text-optional': true },
+    paint: { 'text-color': WHITE, 'text-halo-color': BLACK, 'text-halo-width': 1.5 } });
+}
+
+export function MapView({ sites, matches, doneRoutes, doneSites, selected, terrain3d, onSelect }: Props) {
   const el = useRef<HTMLDivElement>(null);
   const map = useRef<MLMap | null>(null);
   const ready = useRef(false);
-  const latest = useRef({ sites, doneSites, selectedId, terrain3d, onSelect });
-  latest.current = { sites, doneSites, selectedId, terrain3d, onSelect };
+  const latest = useRef({ sites, matches, doneRoutes, doneSites, selected, terrain3d, onSelect });
+  latest.current = { sites, matches, doneRoutes, doneSites, selected, terrain3d, onSelect };
 
   // init once
   useEffect(() => {
-    const m = new MLMap({
-      container: el.current!,
-      style: STYLE_URL,
-      bounds: ROMANIA,
-      fitBoundsOptions: { padding: 20 },
-      maxPitch: 80,
-      attributionControl: false,
-    });
+    const m = new MLMap({ container: el.current!, style: STYLE_URL, bounds: ROMANIA, fitBoundsOptions: { padding: 20 }, maxPitch: 80, attributionControl: false });
     map.current = m;
     if (import.meta.env.DEV || location.search.includes('debug')) Object.assign(window, { __map: m }); // e2e checks / on-device debugging
     m.addControl(new AttributionControl({ compact: true }), 'bottom-right');
-    m.addControl(new NavigationControl({ visualizePitch: true }), 'top-right');
+    m.addControl(new NavigationControl({ showZoom: false, visualizePitch: true }), 'top-right'); // pinch to zoom; compass resets rotation
     m.addControl(new GeolocateControl({ positionOptions: { enableHighAccuracy: true }, trackUserLocation: true }), 'top-right');
 
     m.on('load', () => {
-      const { sites, doneSites } = latest.current;
+      const { sites, matches, doneRoutes, doneSites } = latest.current;
       const firstSymbol = m.getStyle().layers.find((l) => l.type === 'symbol')?.id;
 
       m.addSource('dem', { type: 'raster-dem', tiles: [DEM_TEMPLATE], tileSize: 256, maxzoom: DEM_MAXZOOM, encoding: 'terrarium',
         attribution: '<a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md">Terrain: Mapzen/AWS</a>' });
       m.addLayer({ id: 'hillshade', type: 'hillshade', source: 'dem',
-        paint: { 'hillshade-exaggeration': 0.85, 'hillshade-shadow-color': '#000', 'hillshade-highlight-color': 'rgba(214,226,206,0.32)', 'hillshade-accent-color': '#14251b' } }, firstSymbol);
+        paint: { 'hillshade-exaggeration': 0.8, 'hillshade-shadow-color': BLACK, 'hillshade-highlight-color': 'rgba(255,255,255,0.22)', 'hillshade-accent-color': '#111111' } }, firstSymbol);
 
       m.addImage('check', checkImage(), { pixelRatio: 2 });
-      m.addSource('sites', { type: 'geojson', data: toGeoJSON(sites, doneSites), cluster: true, clusterRadius: 36, clusterMaxZoom: 8,
+      m.addSource('sites', { type: 'geojson', data: sitesData(sites, doneSites), cluster: true, clusterRadius: 36, clusterMaxZoom: 8,
         attribution: 'Data: <a href="https://www.via-ferrata.ro">via-ferrata.ro</a>' });
+      m.addSource('routes', { type: 'geojson', data: routesData(sites, matches, doneRoutes) });
+      m.addSource('regions', { type: 'geojson', data: regionsData(sites) });
 
+      // site regions (multi-route walls), visible as you zoom in
+      const regionZoom = { minzoom: ROUTES_ZOOM - 1.5 };
+      m.addLayer({ id: 'region-fill', type: 'fill', source: 'regions', filter: ['==', ['geometry-type'], 'Polygon'], ...regionZoom,
+        paint: { 'fill-color': WHITE, 'fill-opacity': 0.05 } });
+      m.addLayer({ id: 'region-line', type: 'line', source: 'regions', filter: ['==', ['geometry-type'], 'Polygon'], ...regionZoom,
+        paint: { 'line-color': WHITE, 'line-opacity': 0.55, 'line-width': 1.25, 'line-dasharray': [2, 2] } });
+      m.addLayer({ id: 'region-label', type: 'symbol', source: 'regions', filter: ['==', ['get', 'kind'], 'label'], ...regionZoom,
+        layout: { 'text-field': ['get', 'label'], 'text-font': FONT, 'text-size': 12, 'text-letter-spacing': 0.15, 'text-anchor': 'bottom', 'text-offset': [0, -0.4] },
+        paint: { 'text-color': WHITE, 'text-halo-color': BLACK, 'text-halo-width': 1.5 } });
+
+      // clusters
       m.addLayer({ id: 'clusters', type: 'circle', source: 'sites', filter: ['has', 'point_count'],
-        paint: { 'circle-color': 'rgba(14,19,17,0.92)', 'circle-radius': ['step', ['get', 'point_count'], 15, 5, 19], 'circle-stroke-color': '#f5f5f4', 'circle-stroke-width': 2 } });
+        paint: { 'circle-color': BLACK, 'circle-radius': ['step', ['get', 'point_count'], 16, 5, 20], 'circle-stroke-color': WHITE, 'circle-stroke-width': 1 } });
       m.addLayer({ id: 'cluster-count', type: 'symbol', source: 'sites', filter: ['has', 'point_count'],
-        layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-font': ['Noto Sans Regular'], 'text-size': 13, 'text-allow-overlap': true },
-        paint: { 'text-color': '#f5f5f4' } });
-      m.addLayer({ id: 'selected', type: 'circle', source: 'sites', filter: ['==', ['get', 'id'], ''],
-        paint: { 'circle-radius': 19, 'circle-color': 'rgba(255,255,255,0.15)', 'circle-stroke-color': '#fff', 'circle-stroke-width': 2 } });
-      // not done: dark centre, coloured ring · done: solid colour + check
-      m.addLayer({ id: 'pins', type: 'circle', source: 'sites', filter: ['!', ['has', 'point_count']],
-        paint: {
-          'circle-radius': ['interpolate', ['linear'], ['zoom'], 6, 8, 12, 12],
-          'circle-color': ['case', ['get', 'done'], gradeColor, '#0e1311'],
-          'circle-stroke-color': ['case', ['get', 'done'], '#ffffff', gradeColor],
-          'circle-stroke-width': ['case', ['get', 'done'], 2, 3.5],
-        } as never });
-      m.addLayer({ id: 'pin-check', type: 'symbol', source: 'sites', filter: ['all', ['!', ['has', 'point_count']], ['get', 'done']],
-        layout: { 'icon-image': 'check', 'icon-size': ['interpolate', ['linear'], ['zoom'], 6, 0.75, 12, 1.1], 'icon-allow-overlap': true } });
-      // grade letter inside not-done pins, so colour is never the only cue
-      m.addLayer({ id: 'pin-letter', type: 'symbol', source: 'sites', filter: ['all', ['!', ['has', 'point_count']], ['!', ['get', 'done']]],
-        layout: { 'text-field': ['get', 'letter'], 'text-font': ['Noto Sans Regular'], 'text-size': ['interpolate', ['linear'], ['zoom'], 6, 10, 12, 13], 'text-allow-overlap': true },
-        paint: { 'text-color': '#f5f5f4' } });
-      m.addLayer({ id: 'pin-label', type: 'symbol', source: 'sites', filter: ['!', ['has', 'point_count']], minzoom: 8,
-        layout: { 'text-field': ['get', 'name'], 'text-font': ['Noto Sans Regular'], 'text-size': 12, 'text-offset': [0, 1.5], 'text-anchor': 'top' },
-        paint: { 'text-color': '#f5f5f4', 'text-halo-color': '#0e1311', 'text-halo-width': 1.5 } });
+        layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-font': FONT, 'text-size': 13, 'text-allow-overlap': true },
+        paint: { 'text-color': WHITE } });
 
-      m.on('click', 'clusters', async (e) => {
-        const f = e.features![0];
-        const zoom = await (m.getSource('sites') as GeoJSONSource).getClusterExpansionZoom(f.properties.cluster_id);
-        m.easeTo({ center: (f.geometry as GeoJSON.Point).coordinates as [number, number], zoom: zoom + 0.5 });
-      });
-      m.on('click', (e) => {
-        const hit = m.queryRenderedFeatures(e.point, { layers: ['pins', 'clusters'] })[0];
+      // selection rings
+      const ring = { 'circle-radius': 18, 'circle-color': 'rgba(255,255,255,0.12)', 'circle-stroke-color': WHITE, 'circle-stroke-width': 1 };
+      m.addLayer({ id: 'site-selected', type: 'circle', source: 'sites', filter: ['==', ['get', 'id'], ''], paint: ring });
+      m.addLayer({ id: 'route-selected', type: 'circle', source: 'routes', filter: ['==', ['get', 'id'], ''], minzoom: ROUTES_ZOOM, paint: { ...ring, 'circle-radius': 15 } });
+
+      // pins: single-route sites always; multi-route sites until ROUTES_ZOOM, then their routes
+      const unclustered: ExpressionSpecification = ['!', ['has', 'point_count']];
+      addPins(m, 'site', 'sites', ['all', unclustered, ['!', ['get', 'spread']]], {});
+      addPins(m, 'site-spread', 'sites', ['all', unclustered, ['get', 'spread']], { maxzoom: ROUTES_ZOOM });
+      addPins(m, 'route', 'routes', ['has', 'id'], { minzoom: ROUTES_ZOOM }, true);
+      addLabels(m, 'site-label', 'sites', ['all', unclustered, ['!', ['get', 'spread']]], { minzoom: 8 });
+      addLabels(m, 'site-spread-label', 'sites', ['all', unclustered, ['get', 'spread']], { minzoom: 8, maxzoom: ROUTES_ZOOM - 1.5 });
+      addLabels(m, 'route-label', 'routes', ['has', 'id'], { minzoom: ROUTES_ZOOM + 0.5 });
+
+      const tappable = ['route', 'site', 'site-spread', 'clusters', 'region-fill'];
+      m.on('click', async (e) => {
+        const hit = m.queryRenderedFeatures(e.point, { layers: tappable })
+          .sort((a, b) => tappable.indexOf(a.layer.id) - tappable.indexOf(b.layer.id))[0];
+        const p = hit?.properties;
         if (!hit) latest.current.onSelect(null);
-        else if (hit.layer.id === 'pins') latest.current.onSelect(hit.properties.id);
+        else if (hit.layer.id === 'route') latest.current.onSelect({ siteId: p.siteId, routeId: p.id });
+        else if (hit.layer.id === 'region-fill') latest.current.onSelect({ siteId: p.siteId });
+        else if (hit.layer.id === 'clusters') {
+          const zoom = await (m.getSource('sites') as GeoJSONSource).getClusterExpansionZoom(p.cluster_id);
+          m.easeTo({ center: (hit.geometry as GeoJSON.Point).coordinates as [number, number], zoom: zoom + 0.5 });
+        } else latest.current.onSelect({ siteId: p.id });
       });
-      for (const l of ['pins', 'clusters']) {
+      for (const l of tappable.slice(0, 4)) {
         m.on('mouseenter', l, () => (m.getCanvas().style.cursor = 'pointer'));
         m.on('mouseleave', l, () => (m.getCanvas().style.cursor = ''));
       }
@@ -132,23 +197,30 @@ export function MapView({ sites, doneSites, selectedId, terrain3d, onSelect }: P
     return () => m.remove();
   }, []);
 
-  // data / completion changes
+  // data / filter / completion changes
   useEffect(() => {
-    if (ready.current) (map.current!.getSource('sites') as GeoJSONSource).setData(toGeoJSON(sites, doneSites));
-  }, [sites, doneSites]);
+    const m = map.current;
+    if (!ready.current || !m) return;
+    (m.getSource('sites') as GeoJSONSource).setData(sitesData(sites, doneSites));
+    (m.getSource('routes') as GeoJSONSource).setData(routesData(sites, matches, doneRoutes));
+    (m.getSource('regions') as GeoJSONSource).setData(regionsData(sites));
+  }, [sites, matches, doneRoutes, doneSites]);
 
-  // selection: highlight + bring the pin above the bottom sheet
+  // selection: highlight + bring it above the bottom sheet (multi-route sites zoom in to show their routes)
   useEffect(() => {
     const m = map.current;
     if (!m || !ready.current) return;
-    m.setFilter('selected', ['==', ['get', 'id'], selectedId ?? '']);
-    const s = latest.current.sites.find((x) => x.id === selectedId);
-    if (s) {
-      const wide = innerWidth >= 768;
-      m.easeTo({ center: s.coords, zoom: Math.max(m.getZoom(), 10.5),
-        padding: wide ? { left: 420, top: 0, right: 0, bottom: 0 } : { bottom: innerHeight * 0.5, top: 0, left: 0, right: 0 } });
-    }
-  }, [selectedId]);
+    m.setFilter('site-selected', ['==', ['get', 'id'], selected && !selected.routeId ? selected.siteId : '']);
+    m.setFilter('route-selected', ['==', ['get', 'id'], selected?.routeId ?? '']);
+    const s = latest.current.sites.find((x) => x.id === selected?.siteId);
+    if (!s) return;
+    const route = s.routes.find((r) => r.id === selected?.routeId);
+    const spreadSite = isSpread(s);
+    const center = route?.coords ?? (spreadSite ? centroid(routePoints(s).map((r) => r.coords!)) : s.coords);
+    const zoom = Math.max(m.getZoom(), route ? 16.5 : spreadSite ? ROUTES_ZOOM + 1 : 10.5);
+    const padding = innerWidth >= 768 ? { left: 420, top: 0, right: 0, bottom: 0 } : { bottom: innerHeight * 0.5, top: 0, left: 0, right: 0 };
+    m.easeTo({ center, zoom, padding });
+  }, [selected?.siteId, selected?.routeId]);
 
   useEffect(() => {
     if (ready.current) applyTerrain(map.current!, terrain3d, true);

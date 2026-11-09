@@ -1,6 +1,6 @@
 {
   "source": "https://www.via-ferrata.ro",
-  "scrapedAt": "2026-11-09T17:02:36.806Z",
+  "scrapedAt": "2026-11-09T18:47:44.738Z",
   "ferratas": [
     {
       "id": "magura-batarci",
@@ -232,7 +232,11 @@
           "ferrataMin": 40,
           "totalMin": 65,
           "ferrataRaw": "40min",
-          "totalRaw": "1h 05"
+          "totalRaw": "1h 05",
+          "coords": [
+            22.546722,
+            46.938528
+          ]
         },
         {
           "id": "suncuius-podu-indian",
@@ -244,7 +248,11 @@
           "ferrataMin": 30,
           "totalMin": 55,
           "ferrataRaw": "30min",
-          "totalRaw": "55min"
+          "totalRaw": "55min",
+          "coords": [
+            22.54706,
+            46.93781
+          ]
         },
         {
           "id": "suncuius-sarpele-cu-clopotei",
@@ -256,7 +264,11 @@
           "ferrataMin": 40,
           "totalMin": 65,
           "ferrataRaw": "40min",
-          "totalRaw": "1h 05"
+          "totalRaw": "1h 05",
+          "coords": [
+            22.546722,
+            46.938528
+          ]
         },
         {
           "id": "suncuius-la-pendul",
@@ -268,7 +280,11 @@
           "ferrataMin": 40,
           "totalMin": 70,
           "ferrataRaw": "40min",
-          "totalRaw": "1h 10"
+          "totalRaw": "1h 10",
+          "coords": [
+            22.546722,
+            46.938528
+          ]
         },
         {
           "id": "suncuius-piticot",
@@ -280,7 +296,11 @@
           "ferrataMin": 10,
           "totalMin": 22,
           "ferrataRaw": "10min",
-          "totalRaw": "22min"
+          "totalRaw": "22min",
+          "coords": [
+            22.546444,
+            46.938778
+          ]
         }
       ]
     },
@@ -388,7 +408,11 @@
           "totalMin": 90,
           "ferrataRaw": "1h+",
           "totalRaw": "1h30",
-          "isMain": true
+          "isMain": true,
+          "coords": [
+            23.754,
+            45.19239
+          ]
         },
         {
           "id": "baia-de-fier-creasta-pesterii",
@@ -400,7 +424,11 @@
           "ferrataMin": 30,
           "totalMin": null,
           "ferrataRaw": "30min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.754,
+            45.19239
+          ]
         },
         {
           "id": "baia-de-fier-marea-crapatura",
@@ -412,7 +440,11 @@
           "ferrataMin": 20,
           "totalMin": null,
           "ferrataRaw": "20min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.754,
+            45.19239
+          ]
         },
         {
           "id": "baia-de-fier-spirala-mica",
@@ -424,7 +456,11 @@
           "ferrataMin": 15,
           "totalMin": null,
           "ferrataRaw": "15min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75444,
+            45.19223
+          ]
         },
         {
           "id": "baia-de-fier-loreley",
@@ -436,7 +472,11 @@
           "ferrataMin": 30,
           "totalMin": null,
           "ferrataRaw": "30min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75609,
+            45.19273
+          ]
         },
         {
           "id": "baia-de-fier-pantera-roz",
@@ -448,7 +488,11 @@
           "ferrataMin": 60,
           "totalMin": null,
           "ferrataRaw": "1h",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75609,
+            45.19273
+          ]
         },
         {
           "id": "baia-de-fier-amfiteatrul-zmeilor",
@@ -460,7 +504,11 @@
           "ferrataMin": 90,
           "totalMin": null,
           "ferrataRaw": "1h30",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75656,
+            45.18942
+          ]
         },
         {
           "id": "baia-de-fier-saritoarea-ursului",
@@ -472,7 +520,11 @@
           "ferrataMin": 30,
           "totalMin": null,
           "ferrataRaw": "30min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75511,
+            45.19132
+          ]
         },
         {
           "id": "baia-de-fier-spirala-medie",
@@ -484,7 +536,11 @@
           "ferrataMin": 60,
           "totalMin": null,
           "ferrataRaw": "1h+",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75511,
+            45.19132
+          ]
         },
         {
           "id": "baia-de-fier-laura",
@@ -496,7 +552,11 @@
           "ferrataMin": null,
           "totalMin": null,
           "ferrataRaw": "?",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.756361,
+            45.189578
+          ]
         },
         {
           "id": "baia-de-fier-vanturilor",
@@ -520,7 +580,11 @@
           "ferrataMin": 30,
           "totalMin": null,
           "ferrataRaw": "30min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75633,
+            45.18973
+          ]
         },
         {
           "id": "baia-de-fier-antivirus",
@@ -532,7 +596,11 @@
           "ferrataMin": 30,
           "totalMin": null,
           "ferrataRaw": "30min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75633,
+            45.18973
+          ]
         },
         {
           "id": "baia-de-fier-kuky",
@@ -544,7 +612,11 @@
           "ferrataMin": 30,
           "totalMin": null,
           "ferrataRaw": "30min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.755909,
+            45.186793
+          ]
         },
         {
           "id": "baia-de-fier-mecanicul",
@@ -556,7 +628,11 @@
           "ferrataMin": 45,
           "totalMin": null,
           "ferrataRaw": "45min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.756149,
+            45.187298
+          ]
         },
         {
           "id": "baia-de-fier-jnepeni",
@@ -568,7 +644,11 @@
           "ferrataMin": 45,
           "totalMin": null,
           "ferrataRaw": "45min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.756,
+            45.18803
+          ]
         },
         {
           "id": "baia-de-fier-giuliana",
@@ -580,7 +660,11 @@
           "ferrataMin": 30,
           "totalMin": null,
           "ferrataRaw": "30min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75601,
+            45.18808
+          ]
         },
         {
           "id": "baia-de-fier-dodo",
@@ -592,7 +676,11 @@
           "ferrataMin": 20,
           "totalMin": null,
           "ferrataRaw": "20 min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.755807,
+            45.190368
+          ]
         },
         {
           "id": "baia-de-fier-iulia",
@@ -604,7 +692,11 @@
           "ferrataMin": 30,
           "totalMin": null,
           "ferrataRaw": "30 min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75647,
+            45.1895
+          ]
         },
         {
           "id": "baia-de-fier-irina",
@@ -616,7 +708,11 @@
           "ferrataMin": 40,
           "totalMin": null,
           "ferrataRaw": "40 min",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75647,
+            45.1895
+          ]
         },
         {
           "id": "baia-de-fier-gelu",
@@ -628,7 +724,11 @@
           "ferrataMin": null,
           "totalMin": null,
           "ferrataRaw": "…",
-          "totalRaw": null
+          "totalRaw": null,
+          "coords": [
+            23.75603,
+            45.18725
+          ]
         }
       ]
     },

@@ -2,7 +2,7 @@
 import { writeFileSync } from 'node:fs';
 import { deflateSync } from 'node:zlib';
 
-const BG = [14, 19, 17], BACK = [194, 65, 12], FRONT = [249, 115, 22], SNOW = [255, 247, 237];
+const BG = [0, 0, 0], BACK = [90, 90, 90], FRONT = [235, 235, 235], SNOW = [255, 255, 255];
 type P = [number, number];
 const back: P[] = [[0.06, 0.8], [0.32, 0.42], [0.58, 0.8]];
 const front: P[] = [[0.2, 0.8], [0.58, 0.2], [0.94, 0.8]];

@@ -1,9 +1,5 @@
 import type { Ferrata, Grade } from './data/types.ts';
 
-/** A→E scale. Validated (dataviz validate_palette.js, dark surface): lightness band, CVD + normal-vision separation, contrast.
- *  Combined grades use the upper letter's colour. Letters are always shown too, so colour is never the only cue. */
-export const GRADE_COLORS = { A: '#2ba84a', B: '#3d8fe0', C: '#b98a0a', D: '#9b6ff0', E: '#e8445a' } as const;
-export const gradeColor = (g: Grade) => GRADE_COLORS[(g.split('/').at(-1) ?? 'A') as keyof typeof GRADE_COLORS];
 export const maxGrade = (f: Ferrata) => f.routes.reduce((m, r) => (r.gradeMin > m.gradeMin ? r : m)).grade;
 
 export const fmtMin = (m: number | null) => (m == null ? '—' : m < 60 ? `${m} min` : `${Math.floor(m / 60)}h${m % 60 ? ` ${String(m % 60).padStart(2, '0')}` : ''}`);
@@ -11,11 +7,8 @@ export const fmtM = (m: number | null) => (m == null ? '—' : m >= 1000 ? `${(m
 export const today = () => new Date().toLocaleDateString('sv'); // YYYY-MM-DD, local time
 export const fmtDate = (iso: string) => new Date(iso + 'T12:00').toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
 
-export const GradeBadge = ({ g }: { g: Grade }) => (
-  <span className="grade" style={{ background: gradeColor(g) }}>
-    {g}
-  </span>
-);
+/** Monochrome grade badge: easy grades outlined, harder ones (D, E) solid, so difficulty still reads at a glance. */
+export const GradeBadge = ({ g }: { g: Grade }) => <span className={`grade${/[DE]$/.test(g) ? ' hard' : ''}`}>{g}</span>;
 
 const icon = (d: string) => () => (
   <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

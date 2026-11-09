@@ -105,6 +105,7 @@ interface RawRoute {
   elevationM: number | null;
   ferrataRaw: string | null;
   totalRaw: string | null;
+  coords?: [number, number] | null;
 }
 const blank = (name: string): RawRoute => ({ name, grade: null, lengthM: null, elevationM: null, ferrataRaw: null, totalRaw: null });
 const after = (s: string) => s.replace(/^[^:]*:\s*/, '').trim();
@@ -153,7 +154,8 @@ function parseRoutes(lines: string[]): RawRoute[] {
     }
 
     if (!cur) return;
-    if (/^Lungime/i.test(line)) cur.lengthM ??= parseMeters(line);
+    if (/GPS Start/i.test(line)) cur.coords ??= parseDecimalCoords(line);
+    else if (/^Lungime/i.test(line)) cur.lengthM ??= parseMeters(line);
     else if (/^Diferen[tț][aă] de nivel/i.test(line)) cur.elevationM ??= parseMeters(line);
     else if (/^(Dificultate|Grad)/i.test(line)) cur.grade ??= parseGrade(line.replace(/^(Dificultate|Grad( de dificultate)?)[^:A-E]*:?/i, ' '));
     else if (/^(Durata (de parcurs|via ferrata)|Timp de parcurgere)/i.test(line)) cur.ferrataRaw ??= line.includes(':') ? after(line) : line.replace(/^Timp de parcurgere\s*/i, '');
@@ -259,6 +261,7 @@ for (const item of list) {
       ferrataRaw,
       totalRaw,
       ...(main ? { isMain: true } : {}),
+      ...(!single && r.coords ? { coords: r.coords } : {}),
     };
   });
 

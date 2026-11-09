@@ -49,7 +49,7 @@ export function OfflineArea({ site }: { site: Ferrata }) {
         Download area for offline · ≈ {fmtBytes(plan.estimateBytes)}
       </button>
       <p className="hint">
-        Map + 3D terrain within {RADIUS_KM} km ({tiles} tiles). Do it on Wi-Fi before you go — there's often no signal in the gorges.
+        Map + terrain within {RADIUS_KM} km ({tiles} tiles). Best on Wi-Fi before you go.
         {progress && ' Another download is running.'}
       </p>
       {error && <p className="small warn">{error}</p>}

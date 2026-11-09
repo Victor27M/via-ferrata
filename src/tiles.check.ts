@@ -15,3 +15,19 @@ assert.ok(isTileUrl(new URL('https://tiles.openfreemap.org/planet/20261101_08001
 assert.ok(!isTileUrl(new URL('https://tiles.openfreemap.org/planet')));
 assert.ok(isTileUrl(new URL('https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4636/2931.png')));
 console.log('tile checks ok');
+
+// geo helpers
+import { metres, regionRing, spread } from './geo.ts';
+const same: [number, number][] = [[23.754, 45.19239], [23.754, 45.19239], [23.754, 45.19239], [23.7552, 45.19223]];
+const sp = spread(same);
+assert.equal(new Set(sp.map((p) => p.join())).size, 4, 'shared starts are fanned out');
+assert.ok(metres(sp[3], same[3]) < 1, 'far-apart points stay put');
+assert.ok(Math.abs(sp[0][1] - same[0][1]) < 0.0004, 'fan-out stays within metres');
+const near = spread([[23.75636, 45.189578], [23.75633, 45.18973], [23.75647, 45.1895]]); // Laura / Virus / Iulia, 8–20 m apart
+const gaps = [metres(near[0], near[1]), metres(near[1], near[2]), metres(near[0], near[2])];
+assert.ok(Math.min(...gaps) > 21, `close starts are pushed apart (${gaps.map(Math.round)})`);
+const ring = regionRing([[23.754, 45.192], [23.756, 45.187]]);
+assert.deepEqual(ring[0], ring.at(-1), 'ring is closed');
+const lats = ring.map((p) => p[1]);
+assert.ok(Math.min(...lats) < 45.187 && Math.max(...lats) > 45.192, 'ring encloses the points');
+console.log('geo checks ok');

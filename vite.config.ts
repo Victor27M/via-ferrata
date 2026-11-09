@@ -17,8 +17,8 @@ export default defineConfig({
         name: 'Via Ferrata Romania',
         short_name: 'Via Ferrata',
         description: 'Personal map & climb tracker for Romanian via ferratas',
-        theme_color: '#0e1311',
-        background_color: '#0e1311',
+        theme_color: '#000000',
+        background_color: '#000000',
         display: 'standalone',
         orientation: 'portrait',
         icons: [

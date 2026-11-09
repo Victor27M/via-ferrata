@@ -16,6 +16,8 @@ export interface Route {
   ferrataRaw?: string | null;
   totalRaw?: string | null;
   isMain?: boolean;
+  /** Route start [lng, lat] when the source gives one (multi-route sites). */
+  coords?: [number, number];
 }
 
 export interface Ferrata {

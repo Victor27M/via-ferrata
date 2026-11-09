@@ -1,5 +1,11 @@
 {
   "_help": "Merged on top of ferratas.json. sites.<id>: fields replace scraped ones; routes merge by id (new ids are added). Unknown site id = new site (give all fields). remove: site ids to drop. Setting coords marks them verified. See README.",
-  "sites": {},
+  "sites": {
+    "baia-de-fier": {
+      "routes": [
+        { "id": "baia-de-fier-vanturilor", "coords": [23.75452, 45.19208], "_note": "approximate: source has no GPS, says it starts under the cliff just after Spirala Mica (see via-ferrata.ro route map)" }
+      ]
+    }
+  },
   "remove": []
 }

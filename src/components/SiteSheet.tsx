@@ -9,6 +9,8 @@ interface Props {
   site: Ferrata;
   matching: Set<string> | undefined;
   done: Map<string, Completion>;
+  /** Route tapped on the map: highlighted and scrolled into view. */
+  highlight?: string;
   onMark: (routeId: string, date: string) => void;
   onOpenLog: (routeId: string) => void;
   onClose: () => void;
@@ -21,7 +23,7 @@ const Stat = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-export function SiteSheet({ site, matching, done, onMark, onOpenLog, onClose }: Props) {
+export function SiteSheet({ site, matching, done, highlight, onMark, onOpenLog, onClose }: Props) {
   const main = site.routes.find((r) => r.isMain) ?? (site.routes.length === 1 ? site.routes[0] : undefined);
   const doneCount = site.routes.filter((r) => done.has(r.id)).length;
   const grades = [...new Set([...site.routes].sort((a, b) => a.gradeMin - b.gradeMin).map((r) => r.grade))];
@@ -65,12 +67,12 @@ export function SiteSheet({ site, matching, done, onMark, onOpenLog, onClose }: 
           <IconRoute /> Google Maps
         </a>
       </div>
-      <p className="hint">Directions go to the route start. Check the source page for parking and the approach path.</p>
+      <p className="hint">To the route start — see the source page for parking.</p>
 
       <h3 className="label">{multi ? 'Routes' : 'Your climb'}</h3>
       <ul className="routes">
         {[...site.routes].sort((a, b) => a.gradeMin - b.gradeMin).map((r) => (
-          <RouteRow key={r.id} r={r} dim={!!matching && !matching.has(r.id)} c={done.get(r.id)} onMark={onMark} onOpenLog={onOpenLog} />
+          <RouteRow key={r.id} r={r} dim={!!matching && !matching.has(r.id)} hl={r.id === highlight} c={done.get(r.id)} onMark={onMark} onOpenLog={onOpenLog} />
         ))}
       </ul>
 
@@ -87,13 +89,13 @@ export function SiteSheet({ site, matching, done, onMark, onOpenLog, onClose }: 
   );
 }
 
-function RouteRow({ r, dim, c, onMark, onOpenLog }: { r: Route; dim: boolean; c?: Completion } & Pick<Props, 'onMark' | 'onOpenLog'>) {
+function RouteRow({ r, dim, hl, c, onMark, onOpenLog }: { r: Route; dim: boolean; hl: boolean; c?: Completion } & Pick<Props, 'onMark' | 'onOpenLog'>) {
   const facts = [r.lengthM && `↔ ${fmtM(r.lengthM)}`, r.elevationM && `↑ ${fmtM(r.elevationM)}`, r.ferrataMin && `⏱ ${fmtMin(r.ferrataMin)}`]
     .filter(Boolean)
     .join('  ');
   const logged = c && (c.notes || c.partners || c.conditions?.length);
   return (
-    <li className={`route${dim ? ' dim' : ''}${c ? ' is-done' : ''}`}>
+    <li className={`route${dim ? ' dim' : ''}${c ? ' is-done' : ''}${hl ? ' hl' : ''}`} ref={hl ? (el) => el?.scrollIntoView({ block: 'center', behavior: 'smooth' }) : undefined}>
       <GradeBadge g={r.grade} />
       {c ? (
         <button className="route-main" onClick={() => onOpenLog(r.id)}>

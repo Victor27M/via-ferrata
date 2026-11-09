@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { FERRATAS } from '../data/index.ts';
 import { computeStats } from '../stats.ts';
 import type { Completion } from '../storage/types.ts';
-import { GRADE_COLORS, GradeBadge, fmtM } from '../ui.tsx';
+import { GradeBadge, fmtM } from '../ui.tsx';
 import { BottomSheet } from './BottomSheet.tsx';
 
 export function StatsSheet({ completions, onClose }: { completions: Completion[]; onClose: () => void }) {
@@ -42,9 +42,9 @@ export function StatsSheet({ completions, onClose }: { completions: Completion[]
       <div className="gbars">
         {s.byGrade.map((g) => (
           <div key={g.letter} className="gbar" title={`${g.letter}: ${g.done} of ${g.total} routes done`}>
-            <span className="grade" style={{ background: GRADE_COLORS[g.letter] }}>{g.letter}</span>
+            <GradeBadge g={g.letter} />
             <div className="gbar-track">
-              <div className="gbar-fill" style={{ width: `${g.total ? (g.done / g.total) * 100 : 0}%`, background: GRADE_COLORS[g.letter] }} />
+              <div className="gbar-fill" style={{ width: `${g.total ? (g.done / g.total) * 100 : 0}%` }} />
             </div>
             <span className="gbar-num">{g.done}<span className="muted">/{g.total}</span></span>
           </div>

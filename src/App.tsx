@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FilterSheet } from './components/FilterSheet.tsx';
 import { LogSheet } from './components/LogSheet.tsx';
-import { MapView } from './components/MapView.tsx';
+import { MapView, type Selection } from './components/MapView.tsx';
 import { SettingsSheet } from './components/SettingsSheet.tsx';
 import { SiteSheet } from './components/SiteSheet.tsx';
 import { StatsSheet } from './components/StatsSheet.tsx';
@@ -20,7 +20,7 @@ export function App() {
   const [filters, setFilters] = useState<Filters>(() => defaultFilters(BOUNDS));
   const [sheet, setSheet] = useState<'filters' | 'settings' | 'stats' | null>(null);
   const [logRouteId, setLogRouteId] = useState<string | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selection, setSelection] = useState<Selection | null>(null);
   const [terrain3d, setTerrain3d] = useState(() => pref('terrain3d') === '1');
   const [completions, setCompletions] = useState<Completion[]>([]);
   const [lastBackup, setLastBackup] = useState<string>();
@@ -38,7 +38,7 @@ export function App() {
   const matches = useMemo(() => matchSites(FERRATAS, filters, BOUNDS, doneRouteIds), [filters, doneRouteIds]);
   const visible = useMemo(() => FERRATAS.filter((f) => matches.has(f.id)), [matches]);
   const chips = activeChips(filters, BOUNDS, fmtM, fmtMin);
-  const selected = FERRATAS.find((f) => f.id === selectedId);
+  const selected = FERRATAS.find((f) => f.id === selection?.siteId);
 
   const mark = async (routeId: string, date: string) => {
     await storage.saveCompletion({ id: done.get(routeId)?.id ?? newId(), routeId, date });
@@ -63,7 +63,7 @@ export function App() {
 
   return (
     <>
-      <MapView sites={visible} doneSites={doneSites} selectedId={selectedId} terrain3d={terrain3d} onSelect={setSelectedId} />
+      <MapView sites={visible} matches={matches} doneRoutes={doneRouteIds} doneSites={doneSites} selected={selection} terrain3d={terrain3d} onSelect={setSelection} />
 
       <div className="top">
         {showReminder && (
@@ -100,7 +100,7 @@ export function App() {
       </nav>
 
       {selected && !sheet && !logCompletion && (
-        <SiteSheet site={selected} matching={matches.get(selected.id)} done={done} onMark={mark} onOpenLog={setLogRouteId} onClose={() => setSelectedId(null)} />
+        <SiteSheet site={selected} matching={matches.get(selected.id)} done={done} highlight={selection?.routeId} onMark={mark} onOpenLog={setLogRouteId} onClose={() => setSelection(null)} />
       )}
       {logCompletion && logSite && (
         <LogSheet key={logCompletion.id} site={logSite} route={logSite.routes.find((r) => r.id === logRouteId)!} completion={logCompletion}
