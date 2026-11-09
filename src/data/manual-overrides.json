@@ -1,0 +1,5 @@
+{
+  "_help": "Merged on top of ferratas.json. sites.<id>: fields replace scraped ones; routes merge by id (new ids are added). Unknown site id = new site (give all fields). remove: site ids to drop. Setting coords marks them verified. See README.",
+  "sites": {},
+  "remove": []
+}

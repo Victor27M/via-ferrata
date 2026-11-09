@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Via Ferrata in Romania</name>
+    <description><![CDATA[[ro] O harta a traseelor de via ferrata din Romania descrise pe www.via-ferrata.ro.<br>[en] A map covering via ferrata routes in Romania.]]></description>
+    <Style id="icon-1771-0288D1-labelson">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="icon-1771-097138-labelson">
+      <IconStyle>
+        <color>ff387109</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="icon-1771-880E4F-labelson">
+      <IconStyle>
+        <color>ff4f0e88</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="icon-1771-E65100-labelson">
+      <IconStyle>
+        <color>ff0051e6</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Folder>
+      <name>categoria grade multiple</name>
+      <Placemark>
+        <name>Suncuius, Bihor - A, A/B, B, C/D</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/suncuius/<br><br>En: https://www.via-ferrata.ro/en/suncuius-english/<br><br>5 trasee/5 routes<br>- 2 usoare/2 easy<br>- 2 medii/2 medium<br>- 1 greu/1 difficult<br>2018-2023]]></description>
+        <styleUrl>#icon-1771-0288D1-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            22.546722,46.938528,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pestera Muierilor, Baia de Fier - A, B, C, D, E</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/baia-de-fier/<br><br>En: https://www.via-ferrata.ro/en/baia-de-fier-english/<br><br>Traseu principal/Main route:<br>- Lungime/Length: 400m<br>- Diferenta de nivel/Vertical: 100m<br>- Timp/Time: 1h30 (vf 1h)<br><br>21 trasee/21 routes<br>- 6 usoare/6 easy<br>- 5 medii/5 medium<br>- 10 grele/10 difficult<br>20xx-2021]]></description>
+        <styleUrl>#icon-1771-0288D1-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            23.753686,45.1921354,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Astragalus, Cheile Sugaului - A/B, C, C/D, D</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/astragalus/<br><br>En: https://www.via-ferrata.ro/en/astragalus-english/<br><br>Traseu principal/Main route:<br>- Lungime/Length: 700m<br>- Diferenta de nivel/Vertical: 285m<br>- Timp/Time: 2h+ (vf 1h30)<br><br>6 trasee/6 routes<br>2017]]></description>
+        <styleUrl>#icon-1771-0288D1-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            25.8496666666667,46.8257222222222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Piatra Soimilor - Corbu, Harghita - B/C, D, E</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/piatra-soimilor/<br><br>En: https://www.via-ferrata.ro/en/piatra-soimilor-english/<br><br>Lungime/Length: 250m all 3 routes in total<br>Diferenta de nivel/Vertical: 100m<br>Timp/Time: 3h30 (vf 45min)<br>2018, 2019]]></description>
+        <styleUrl>#icon-1771-0288D1-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            25.6997777777778,47.0198888888889,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Măgura Bătarci - Satu Mare - A, B</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/magura-batarci/<br><br>En: pending<br><br>Lungime/Length: 180m<br>Diferenta de nivel/Vertical: 60m<br>Timp/Time: 1h (vf 20min)<br>2022]]></description>
+        <styleUrl>#icon-1771-0288D1-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            23.1848,48.0225,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>categoria B, B/C</name>
+      <Placemark>
+        <name>Pericolul Caprelor, Madaras - B/C</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/pericolul-caprelor/<br><br>En: https://www.via-ferrata.ro/en/pericolul-caprelor-english/<br><br>Lungime/Length: 200m (2 routes)<br>Diferenta de nivel/Vertical: 60m<br>Timp/Time: 40min (vf 20min)<br>2012]]></description>
+        <styleUrl>#icon-1771-097138-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            25.5642778,46.4566111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Peretele Zânelor - Vadu Crisului - B</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/mocanita/<br><br>En: https://www.via-ferrata.ro/en/mocanita-english/<br><br>Lungime/Length: 150m<br>Diferenta de nivel/Vertical: 110m<br>Timp/Time: 2h (vf 1h)<br>2015]]></description>
+        <styleUrl>#icon-1771-097138-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            22.5138527777777,46.9700583333333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pietrele Negre - Vartop - B</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/pietrele-negre/<br><br>En: https://www.via-ferrata.ro/en/pietrele-negre-english/<br><br>Lungime/Length: 200m<br>Diferenta de nivel/Vertical: 100m<br>Timp/Time: 1h45 (vf 1h)<br>2014]]></description>
+        <styleUrl>#icon-1771-097138-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            22.6321944444444,46.5166944444444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Cheile Cutilor, Rosia, Bihor - B/C</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/cheile-cutilor/<br><br>En: https://www.via-ferrata.ro/en/cheile-cutilor-english/<br><br>Lungime/Length: 270m<br>Diferenta de nivel/Vertical: 70m<br>Timp/Time: 1h40 (vf 40min)<br>2021]]></description>
+        <styleUrl>#icon-1771-097138-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            22.3959444444444,46.8335833333333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Soim Calator, Cheile Varghisului - B/C</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/soim-calator/<br><br>En: https://www.via-ferrata.ro/en/soim-calator-english/<br><br>Lungime/Length: 240m<br>Diferenta de nivel/Vertical: 120m<br>Timp/Time: 2h (vf 50min)<br>2021]]></description>
+        <styleUrl>#icon-1771-097138-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            25.5425833333333,46.2215277777778,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Turnul lui Liman, Timis - B</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/turnul-lui-liman/<br><br>En: https://www.via-ferrata.ro/en/turnul-lui-liman-english/<br><br>Lungime/Length: 100m<br>Diferenta de nivel/Vertical: 80m<br>Timp/Time: 40min (vf 20min)<br>2020]]></description>
+        <styleUrl>#icon-1771-097138-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            22.3226111111111,45.7615833333333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Șura Ușorilor - Valea Dâlbii - B</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/sura-usorilor/<br><br>En: https://www.via-ferrata.ro/en/sura-usorilor-english/<br><br>Lungime/Length: 100m<br>Diferenta de nivel/Vertical: 50m<br>Timp/Time: 1h10 (vf 25min)<br>2023]]></description>
+        <styleUrl>#icon-1771-097138-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            22.371808,46.78565,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Cetate Dezna, Arad - B</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/cetate-dezna/<br><br>En: https://www.via-ferrata.ro/en/cetate-dezna-english/<br><br>Lungime/Length: 150m<br>Diferenta de nivel totala/Total vertical: 120m<br>Timp/Time: 1h15 (vf 30min)<br>2022]]></description>
+        <styleUrl>#icon-1771-097138-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            22.25303,46.408023,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Cheile Lazuri, Bihor - B</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/cheile-lazuri/<br><br>En: pending<br><br>Lungime/Length: 350m<br>Diferenta de nivel totala/Total vertical: 140m<br>Timp/Time: 1h (vf 30min)<br>2024]]></description>
+        <styleUrl>#icon-1771-097138-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            22.4239,46.8067,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>categoria C, C/D</name>
+      <Placemark>
+        <name>Casa Zmeului - Vadu Crisului - C</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/casa-zmeului/<br><br>En: https://www.via-ferrata.ro/en/casa-zmeului-english/<br><br>Lungime/Length: 215m<br>Diferenta de nivel/Vertical: 150m<br>Timp/Time: 2h (vf 1h)<br>2017]]></description>
+        <styleUrl>#icon-1771-E65100-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            22.5135559,46.97123,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Wild Ferenc, Lacu Rosu - C/D</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/wild-ferenc/<br><br>En: https://www.via-ferrata.ro/en/wild-ferenc-english/<br><br>Lungime/Length: 200m<br>Diferenta de nivel/Vertical: 173m<br>Timp/Time: 2h (vf 50min)<br>2016]]></description>
+        <styleUrl>#icon-1771-E65100-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            25.7928857,46.7990581,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Cheile Turzii - C</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/sky-fly/<br><br>En: https://www.via-ferrata.ro/en/sky-fly-english/<br><br>Lungime/Length: 350m<br>Diferenta de nivel/Vertical: 200m<br>Timp/Time: 3h (vf 40min)<br>2012]]></description>
+        <styleUrl>#icon-1771-E65100-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            23.6761944444444,46.5656666666667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>categoria D, D/E</name>
+      <Placemark>
+        <name>Cheile Rasnoavei - D</name>
+        <description><![CDATA[Ro: https://www.via-ferrata.ro/cheile-rasnoavei/<br><br>En: https://www.via-ferrata.ro/en/cheile-rasnoavei-english/<br><br>Lungime/Length: 450-750m<br>Diferenta de nivel/Vertical: 250m<br>Timp/Time: 2h30 (vf 2h)<br>2001]]></description>
+        <styleUrl>#icon-1771-880E4F-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            25.5180111111112,45.5452611111111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

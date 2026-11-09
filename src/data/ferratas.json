@@ -1,0 +1,892 @@
+{
+  "source": "https://www.via-ferrata.ro",
+  "scrapedAt": "2026-11-09T17:02:36.806Z",
+  "ferratas": [
+    {
+      "id": "magura-batarci",
+      "name": "Măgura Bătarci",
+      "area": "",
+      "county": "Satu Mare",
+      "coords": [
+        23.1848,
+        48.0225
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/magura-batarci/",
+      "routes": [
+        {
+          "id": "magura-batarci-primii-pasi",
+          "name": "Primii pași",
+          "grade": "A",
+          "gradeMin": 1,
+          "lengthM": null,
+          "elevationM": 40,
+          "ferrataMin": 15,
+          "totalMin": null,
+          "ferrataRaw": "15min",
+          "totalRaw": null
+        },
+        {
+          "id": "magura-batarci-iris-aphylla",
+          "name": "Iris aphylla",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": null,
+          "elevationM": 60,
+          "ferrataMin": 20,
+          "totalMin": null,
+          "ferrataRaw": "20min",
+          "totalRaw": null
+        }
+      ]
+    },
+    {
+      "id": "cheile-lazuri",
+      "name": "Cheile Lazuri",
+      "area": "",
+      "county": "Bihor",
+      "coords": [
+        22.4239,
+        46.8067
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/cheile-lazuri/",
+      "routes": [
+        {
+          "id": "cheile-lazuri",
+          "name": "Cheile Lazuri",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": 350,
+          "elevationM": 130,
+          "ferrataMin": 30,
+          "totalMin": 60,
+          "ferrataRaw": "30min",
+          "totalRaw": "1h",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "sura-usorilor",
+      "name": "Șura Ușorilor",
+      "area": "Valea Dâlbii, comuna Căbești",
+      "county": "Bihor",
+      "coords": [
+        22.371808,
+        46.78565
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/sura-usorilor/",
+      "routes": [
+        {
+          "id": "sura-usorilor",
+          "name": "Șura Ușorilor",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": 100,
+          "elevationM": 50,
+          "ferrataMin": 15,
+          "totalMin": 60,
+          "ferrataRaw": "15min",
+          "totalRaw": "1h",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "cetate-dezna",
+      "name": "Cetate Dezna",
+      "area": "",
+      "county": "Arad",
+      "coords": [
+        22.25303,
+        46.408023
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/cetate-dezna/",
+      "routes": [
+        {
+          "id": "cetate-dezna",
+          "name": "Cetate Dezna",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": 150,
+          "elevationM": 120,
+          "ferrataMin": 30,
+          "totalMin": 75,
+          "ferrataRaw": "30min",
+          "totalRaw": "1h15",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "soim-calator",
+      "name": "Șoim Călător",
+      "area": "Cheile Vârghișului",
+      "county": "Harghita",
+      "coords": [
+        25.54259,
+        46.22154
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/soim-calator/",
+      "routes": [
+        {
+          "id": "soim-calator",
+          "name": "Șoim Călător",
+          "grade": "B/C",
+          "gradeMin": 2.5,
+          "lengthM": 240,
+          "elevationM": 120,
+          "ferrataMin": 50,
+          "totalMin": 120,
+          "ferrataRaw": "50min",
+          "totalRaw": "2h",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "cheile-cutilor",
+      "name": "Cheile Cuților",
+      "area": "comuna Roșia",
+      "county": "Bihor",
+      "coords": [
+        22.395941,
+        46.833592
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/cheile-cutilor/",
+      "routes": [
+        {
+          "id": "cheile-cutilor",
+          "name": "Cheile Cuților",
+          "grade": "B/C",
+          "gradeMin": 2.5,
+          "lengthM": 270,
+          "elevationM": 70,
+          "ferrataMin": 40,
+          "totalMin": 100,
+          "ferrataRaw": "40min",
+          "totalRaw": "1h40",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "turnul-lui-liman",
+      "name": "Turnul lui Liman",
+      "area": "comuna Tomești",
+      "county": "Timiș",
+      "coords": [
+        22.322609,
+        45.761594
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/turnul-lui-liman/",
+      "routes": [
+        {
+          "id": "turnul-lui-liman",
+          "name": "Turnul lui Liman",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": 100,
+          "elevationM": 80,
+          "ferrataMin": 20,
+          "totalMin": 40,
+          "ferrataRaw": "20min",
+          "totalRaw": "40min",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "suncuius",
+      "name": "Șuncuiuș",
+      "area": "",
+      "county": "Bihor",
+      "coords": [
+        22.546722,
+        46.938528
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/suncuius/",
+      "routes": [
+        {
+          "id": "suncuius-grota-cu-hamace",
+          "name": "Grota cu Hamace",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": 150,
+          "elevationM": 80,
+          "ferrataMin": 40,
+          "totalMin": 65,
+          "ferrataRaw": "40min",
+          "totalRaw": "1h 05"
+        },
+        {
+          "id": "suncuius-podu-indian",
+          "name": "Podu Indian",
+          "grade": "C/D",
+          "gradeMin": 3.5,
+          "lengthM": 160,
+          "elevationM": 80,
+          "ferrataMin": 30,
+          "totalMin": 55,
+          "ferrataRaw": "30min",
+          "totalRaw": "55min"
+        },
+        {
+          "id": "suncuius-sarpele-cu-clopotei",
+          "name": "Sarpele cu Clopotei",
+          "grade": "A",
+          "gradeMin": 1,
+          "lengthM": null,
+          "elevationM": 80,
+          "ferrataMin": 40,
+          "totalMin": 65,
+          "ferrataRaw": "40min",
+          "totalRaw": "1h 05"
+        },
+        {
+          "id": "suncuius-la-pendul",
+          "name": "La Pendul",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": null,
+          "elevationM": 80,
+          "ferrataMin": 40,
+          "totalMin": 70,
+          "ferrataRaw": "40min",
+          "totalRaw": "1h 10"
+        },
+        {
+          "id": "suncuius-piticot",
+          "name": "Piticot",
+          "grade": "A/B",
+          "gradeMin": 1.5,
+          "lengthM": 20,
+          "elevationM": 16,
+          "ferrataMin": 10,
+          "totalMin": 22,
+          "ferrataRaw": "10min",
+          "totalRaw": "22min"
+        }
+      ]
+    },
+    {
+      "id": "piatra-soimilor",
+      "name": "Piatra Șoimilor",
+      "area": "comuna Corbu",
+      "county": "Harghita",
+      "coords": [
+        25.6997777777778,
+        47.0198888888889
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/piatra-soimilor/",
+      "routes": [
+        {
+          "id": "piatra-soimilor-falco-peregrinus-usor",
+          "name": "Falco Peregrinus ușor",
+          "grade": "B/C",
+          "gradeMin": 2.5,
+          "lengthM": null,
+          "elevationM": null,
+          "ferrataMin": 45,
+          "totalMin": null,
+          "ferrataRaw": "45 min",
+          "totalRaw": null
+        },
+        {
+          "id": "piatra-soimilor-falco-peregrinus-greu",
+          "name": "Falco Peregrinus greu",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": null,
+          "elevationM": null,
+          "ferrataMin": 15,
+          "totalMin": null,
+          "ferrataRaw": "15 min",
+          "totalRaw": null
+        },
+        {
+          "id": "piatra-soimilor-falco-tinnunculus-extrem",
+          "name": "Falco Tinnunculus extrem",
+          "grade": "E",
+          "gradeMin": 5,
+          "lengthM": 150,
+          "elevationM": 100,
+          "ferrataMin": 45,
+          "totalMin": 210,
+          "ferrataRaw": "45 min (din care 10 min este retragerea estimata la gradul D)",
+          "totalRaw": "3h30",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "casa-zmeului",
+      "name": "Casa Zmeului",
+      "area": "Vadu Crișului",
+      "county": "Bihor",
+      "coords": [
+        22.51355,
+        46.97123
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/casa-zmeului/",
+      "routes": [
+        {
+          "id": "casa-zmeului",
+          "name": "Casa Zmeului",
+          "grade": "C",
+          "gradeMin": 3,
+          "lengthM": 215,
+          "elevationM": 150,
+          "ferrataMin": 60,
+          "totalMin": 120,
+          "ferrataRaw": "1h",
+          "totalRaw": "2h",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "baia-de-fier",
+      "name": "White Wolf",
+      "area": "Peștera Muierilor, Cheile Galbenului, Baia de Fier",
+      "county": "Gorj",
+      "coords": [
+        23.754,
+        45.19239
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/baia-de-fier/",
+      "routes": [
+        {
+          "id": "baia-de-fier-spirala-muierilor",
+          "name": "Spirala Muierilor",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": 400,
+          "elevationM": 100,
+          "ferrataMin": 60,
+          "totalMin": 90,
+          "ferrataRaw": "1h+",
+          "totalRaw": "1h30",
+          "isMain": true
+        },
+        {
+          "id": "baia-de-fier-creasta-pesterii",
+          "name": "Creasta Pesterii",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": 300,
+          "elevationM": 100,
+          "ferrataMin": 30,
+          "totalMin": null,
+          "ferrataRaw": "30min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-marea-crapatura",
+          "name": "Marea Crapatura",
+          "grade": "A",
+          "gradeMin": 1,
+          "lengthM": 250,
+          "elevationM": 100,
+          "ferrataMin": 20,
+          "totalMin": null,
+          "ferrataRaw": "20min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-spirala-mica",
+          "name": "Spirala Mica",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": 100,
+          "elevationM": 30,
+          "ferrataMin": 15,
+          "totalMin": null,
+          "ferrataRaw": "15min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-loreley",
+          "name": "Loreley",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": 300,
+          "elevationM": 105,
+          "ferrataMin": 30,
+          "totalMin": null,
+          "ferrataRaw": "30min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-pantera-roz",
+          "name": "Pantera Roz",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": 500,
+          "elevationM": 250,
+          "ferrataMin": 60,
+          "totalMin": null,
+          "ferrataRaw": "1h",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-amfiteatrul-zmeilor",
+          "name": "Amfiteatrul Zmeilor",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": 200,
+          "elevationM": 150,
+          "ferrataMin": 90,
+          "totalMin": null,
+          "ferrataRaw": "1h30",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-saritoarea-ursului",
+          "name": "Saritoarea Ursului",
+          "grade": "C",
+          "gradeMin": 3,
+          "lengthM": null,
+          "elevationM": null,
+          "ferrataMin": 30,
+          "totalMin": null,
+          "ferrataRaw": "30min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-spirala-medie",
+          "name": "Spirala Medie",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": null,
+          "elevationM": 100,
+          "ferrataMin": 60,
+          "totalMin": null,
+          "ferrataRaw": "1h+",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-laura",
+          "name": "Laura",
+          "grade": "E",
+          "gradeMin": 5,
+          "lengthM": 180,
+          "elevationM": 100,
+          "ferrataMin": null,
+          "totalMin": null,
+          "ferrataRaw": "?",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-vanturilor",
+          "name": "Vanturilor",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": 250,
+          "elevationM": 140,
+          "ferrataMin": 60,
+          "totalMin": null,
+          "ferrataRaw": "1h",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-virus",
+          "name": "Virus",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": null,
+          "elevationM": 100,
+          "ferrataMin": 30,
+          "totalMin": null,
+          "ferrataRaw": "30min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-antivirus",
+          "name": "Antivirus",
+          "grade": "C",
+          "gradeMin": 3,
+          "lengthM": null,
+          "elevationM": 100,
+          "ferrataMin": 30,
+          "totalMin": null,
+          "ferrataRaw": "30min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-kuky",
+          "name": "Kuky",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": null,
+          "elevationM": 100,
+          "ferrataMin": 30,
+          "totalMin": null,
+          "ferrataRaw": "30min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-mecanicul",
+          "name": "Mecanicul",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": null,
+          "elevationM": 100,
+          "ferrataMin": 45,
+          "totalMin": null,
+          "ferrataRaw": "45min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-jnepeni",
+          "name": "Jnepeni",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": null,
+          "elevationM": 100,
+          "ferrataMin": 45,
+          "totalMin": null,
+          "ferrataRaw": "45min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-giuliana",
+          "name": "Giuliana",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": null,
+          "elevationM": 110,
+          "ferrataMin": 30,
+          "totalMin": null,
+          "ferrataRaw": "30min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-dodo",
+          "name": "Dodo",
+          "grade": "C",
+          "gradeMin": 3,
+          "lengthM": null,
+          "elevationM": 100,
+          "ferrataMin": 20,
+          "totalMin": null,
+          "ferrataRaw": "20 min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-iulia",
+          "name": "Iulia",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": null,
+          "elevationM": 100,
+          "ferrataMin": 30,
+          "totalMin": null,
+          "ferrataRaw": "30 min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-irina",
+          "name": "Irina",
+          "grade": "E",
+          "gradeMin": 5,
+          "lengthM": null,
+          "elevationM": 100,
+          "ferrataMin": 40,
+          "totalMin": null,
+          "ferrataRaw": "40 min",
+          "totalRaw": null
+        },
+        {
+          "id": "baia-de-fier-gelu",
+          "name": "Gelu",
+          "grade": "E",
+          "gradeMin": 5,
+          "lengthM": null,
+          "elevationM": 100,
+          "ferrataMin": null,
+          "totalMin": null,
+          "ferrataRaw": "…",
+          "totalRaw": null
+        }
+      ]
+    },
+    {
+      "id": "astragalus",
+      "name": "Astragalus",
+      "area": "Cheile Șugăului-Munticelu, lângă Cheile Bicazului",
+      "county": "Neamț",
+      "coords": [
+        25.849639,
+        46.825694
+      ],
+      "coordsVerified": true,
+      "paid": true,
+      "sourceUrl": "https://www.via-ferrata.ro/astragalus/",
+      "routes": [
+        {
+          "id": "astragalus-traseul-1-principal",
+          "name": "Traseul 1 (principal)",
+          "grade": "C/D",
+          "gradeMin": 3.5,
+          "lengthM": 700,
+          "elevationM": 285,
+          "ferrataMin": 150,
+          "totalMin": 120,
+          "ferrataRaw": "1h30min – 2h30min",
+          "totalRaw": "2h+",
+          "isMain": true
+        },
+        {
+          "id": "astragalus-traseul-2-primul-perete",
+          "name": "Traseul 2 (primul perete)",
+          "grade": "B/C",
+          "gradeMin": 2.5,
+          "lengthM": null,
+          "elevationM": null,
+          "ferrataMin": 75,
+          "totalMin": null,
+          "ferrataRaw": "45min – 1h15min",
+          "totalRaw": null
+        },
+        {
+          "id": "astragalus-traseul-3-al-doilea-perete",
+          "name": "Traseul 3 (al doilea perete)",
+          "grade": "C/D",
+          "gradeMin": 3.5,
+          "lengthM": null,
+          "elevationM": null,
+          "ferrataMin": 105,
+          "totalMin": null,
+          "ferrataRaw": "1h – 1h45min",
+          "totalRaw": null
+        },
+        {
+          "id": "astragalus-traseul-4",
+          "name": "Traseul 4",
+          "grade": "A",
+          "gradeMin": 1,
+          "lengthM": null,
+          "elevationM": null,
+          "ferrataMin": 60,
+          "totalMin": null,
+          "ferrataRaw": "30min – 1h",
+          "totalRaw": null
+        },
+        {
+          "id": "astragalus-traseul-5",
+          "name": "Traseul 5",
+          "grade": "A/B",
+          "gradeMin": 1.5,
+          "lengthM": null,
+          "elevationM": null,
+          "ferrataMin": 75,
+          "totalMin": null,
+          "ferrataRaw": "45min – 1h15min",
+          "totalRaw": null
+        },
+        {
+          "id": "astragalus-traseul-6",
+          "name": "Traseul 6",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": null,
+          "elevationM": null,
+          "ferrataMin": 120,
+          "totalMin": null,
+          "ferrataRaw": "1h15min – 2h",
+          "totalRaw": null
+        }
+      ]
+    },
+    {
+      "id": "wild-ferenc",
+      "name": "Wild Ferenc",
+      "area": "Lacul Roșu, Cheile Bicazului",
+      "county": "Harghita",
+      "coords": [
+        25.793445,
+        46.798428
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/wild-ferenc/",
+      "routes": [
+        {
+          "id": "wild-ferenc",
+          "name": "Wild Ferenc",
+          "grade": "C/D",
+          "gradeMin": 3.5,
+          "lengthM": 200,
+          "elevationM": 173,
+          "ferrataMin": 50,
+          "totalMin": 120,
+          "ferrataRaw": "50min+",
+          "totalRaw": "2h+",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "mocanita",
+      "name": "Mocănița",
+      "area": "Peretele Zânelor, Vadu Crișului",
+      "county": "Bihor",
+      "coords": [
+        22.513861,
+        46.970056
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/mocanita/",
+      "routes": [
+        {
+          "id": "mocanita",
+          "name": "Mocănița",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": 150,
+          "elevationM": 110,
+          "ferrataMin": 60,
+          "totalMin": 120,
+          "ferrataRaw": "1h+",
+          "totalRaw": "2h+",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "pietrele-negre",
+      "name": "Pietrele Negre",
+      "area": "Vârtop",
+      "county": "Bihor",
+      "coords": [
+        22.631667,
+        46.516694
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/pietrele-negre/",
+      "routes": [
+        {
+          "id": "pietrele-negre",
+          "name": "Pietrele Negre",
+          "grade": "B",
+          "gradeMin": 2,
+          "lengthM": 200,
+          "elevationM": 100,
+          "ferrataMin": 60,
+          "totalMin": 105,
+          "ferrataRaw": "1h",
+          "totalRaw": "1h45",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "sky-fly",
+      "name": "Sky Fly",
+      "area": "Grota lui Hili, Cheile Turzii",
+      "county": "Cluj",
+      "coords": [
+        23.676194,
+        46.565667
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/sky-fly/",
+      "routes": [
+        {
+          "id": "sky-fly",
+          "name": "Sky Fly",
+          "grade": "C",
+          "gradeMin": 3,
+          "lengthM": 350,
+          "elevationM": 200,
+          "ferrataMin": 40,
+          "totalMin": 180,
+          "ferrataRaw": "40min",
+          "totalRaw": "3h",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "pericolul-caprelor",
+      "name": "Pericolul Caprelor",
+      "area": "Mădăraș",
+      "county": "Harghita",
+      "coords": [
+        25.564278,
+        46.456611
+      ],
+      "coordsVerified": true,
+      "paid": false,
+      "sourceUrl": "https://www.via-ferrata.ro/pericolul-caprelor/",
+      "routes": [
+        {
+          "id": "pericolul-caprelor",
+          "name": "Pericolul Caprelor",
+          "grade": "B/C",
+          "gradeMin": 2.5,
+          "lengthM": 200,
+          "elevationM": 60,
+          "ferrataMin": 20,
+          "totalMin": 40,
+          "ferrataRaw": "20min",
+          "totalRaw": "40min",
+          "isMain": true
+        }
+      ]
+    },
+    {
+      "id": "cheile-rasnoavei",
+      "name": "Cheile Râșnoavei",
+      "area": "",
+      "county": "Brașov",
+      "coords": [
+        25.518,
+        45.54525
+      ],
+      "coordsVerified": true,
+      "paid": true,
+      "sourceUrl": "https://www.via-ferrata.ro/cheile-rasnoavei/",
+      "routes": [
+        {
+          "id": "cheile-rasnoavei",
+          "name": "Cheile Râșnoavei",
+          "grade": "D",
+          "gradeMin": 4,
+          "lengthM": 450,
+          "elevationM": 250,
+          "ferrataMin": 120,
+          "totalMin": 150,
+          "ferrataRaw": "2h",
+          "totalRaw": "2h30",
+          "isMain": true
+        }
+      ]
+    }
+  ]
+}
