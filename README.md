@@ -1,6 +1,6 @@
 # Via Ferrata Romania — personal map & climb tracker
 
-> Work in progress — Phases 1–3 done (data, map, filters, completion tracking, backup, logbook + photos, stats, directions, weather).
+> Work in progress — Phases 1–4 done (data, map, filters, completion tracking, backup, logbook + photos, stats, directions, weather, offline areas).
 
 ## Run
 
@@ -16,7 +16,9 @@ Deploy and iPhone install: see [DEPLOY.md](DEPLOY.md).
 
 Code map: `src/data/` (types, scraped JSON, overrides merge) · `src/filter.ts` (filter logic) ·
 `src/storage/` (`StorageAdapter` interface + Dexie implementation and backups) · `src/stats.ts` · `src/weather.ts`
-(Open-Meteo, 1 h cache) · `src/photos.ts` (client-side JPEG compression) · `src/components/` (map, sheets).
+(Open-Meteo, 1 h cache) · `src/photos.ts` (client-side JPEG compression) · `src/sw.ts` + `src/tiles.ts` + `src/offline.ts`
+(service worker, tile caching, "download area": ≤4 parallel requests and ≤3000 tiles per OpenFreeMap's offline terms) ·
+`src/components/` (map, sheets). Add `?debug` to the URL to expose the map as `window.__map`.
 
 ## Data
 
