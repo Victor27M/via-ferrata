@@ -13,6 +13,7 @@ interface Props {
   highlight?: string;
   onMark: (routeId: string, date: string) => void;
   onOpenLog: (routeId: string) => void;
+  onUnmark: (routeId: string) => void;
   onClose: () => void;
 }
 
@@ -23,7 +24,7 @@ const Stat = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-export function SiteSheet({ site, matching, done, highlight, onMark, onOpenLog, onClose }: Props) {
+export function SiteSheet({ site, matching, done, highlight, onMark, onUnmark, onOpenLog, onClose }: Props) {
   const main = site.routes.find((r) => r.isMain) ?? (site.routes.length === 1 ? site.routes[0] : undefined);
   const doneCount = site.routes.filter((r) => done.has(r.id)).length;
   const grades = [...new Set([...site.routes].sort((a, b) => a.gradeMin - b.gradeMin).map((r) => r.grade))];
@@ -70,9 +71,15 @@ export function SiteSheet({ site, matching, done, highlight, onMark, onOpenLog, 
       <p className="hint">To the route start — see the source page for parking.</p>
 
       <h3 className="label">{multi ? 'Routes' : 'Your climb'}</h3>
+      {site.routes.some((r) => r.coordsApprox) && (
+        <p className="hint">
+          {site.routes.every((r) => r.coordsApprox) ? 'Route pins are arranged around the site start' : 'Grey-ringed pins are approximate'} —
+          via-ferrata.ro doesn’t publish where {site.routes.every((r) => r.coordsApprox) ? 'each route starts' : 'those routes start'}.
+        </p>
+      )}
       <ul className="routes">
         {[...site.routes].sort((a, b) => a.gradeMin - b.gradeMin).map((r) => (
-          <RouteRow key={r.id} r={r} dim={!!matching && !matching.has(r.id)} hl={r.id === highlight} c={done.get(r.id)} onMark={onMark} onOpenLog={onOpenLog} />
+          <RouteRow key={r.id} r={r} dim={!!matching && !matching.has(r.id)} hl={r.id === highlight} c={done.get(r.id)} onMark={onMark} onUnmark={onUnmark} onOpenLog={onOpenLog} />
         ))}
       </ul>
 
@@ -89,7 +96,7 @@ export function SiteSheet({ site, matching, done, highlight, onMark, onOpenLog, 
   );
 }
 
-function RouteRow({ r, dim, hl, c, onMark, onOpenLog }: { r: Route; dim: boolean; hl: boolean; c?: Completion } & Pick<Props, 'onMark' | 'onOpenLog'>) {
+function RouteRow({ r, dim, hl, c, onMark, onUnmark, onOpenLog }: { r: Route; dim: boolean; hl: boolean; c?: Completion } & Pick<Props, 'onMark' | 'onUnmark' | 'onOpenLog'>) {
   const facts = [r.lengthM && `↔ ${fmtM(r.lengthM)}`, r.elevationM && `↑ ${fmtM(r.elevationM)}`, r.ferrataMin && `⏱ ${fmtMin(r.ferrataMin)}`]
     .filter(Boolean)
     .join('  ');
@@ -108,8 +115,8 @@ function RouteRow({ r, dim, hl, c, onMark, onOpenLog }: { r: Route; dim: boolean
           <span className="muted small">{facts || 'No published stats'}</span>
         </div>
       )}
-      <button className={`check${c ? ' on' : ''}`} aria-pressed={!!c} aria-label={c ? 'Open log' : 'Mark as completed'}
-        onClick={() => (c ? onOpenLog(r.id) : onMark(r.id, today()))}>
+      <button className={`check${c ? ' on' : ''}`} aria-pressed={!!c} aria-label={c ? 'Mark as not done' : 'Mark as completed'}
+        onClick={() => (c ? onUnmark(r.id) : onMark(r.id, today()))}>
         <IconCheck />
       </button>
     </li>

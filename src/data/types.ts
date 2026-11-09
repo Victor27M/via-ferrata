@@ -18,6 +18,8 @@ export interface Route {
   isMain?: boolean;
   /** Route start [lng, lat] when the source gives one (multi-route sites). */
   coords?: [number, number];
+  /** coords is a placeholder (source gives no start for this route); shown dimmed on the map. */
+  coordsApprox?: boolean;
 }
 
 export interface Ferrata {

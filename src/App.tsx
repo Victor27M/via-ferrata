@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FilterSheet } from './components/FilterSheet.tsx';
+import { ListSheet } from './components/ListSheet.tsx';
 import { LogSheet } from './components/LogSheet.tsx';
 import { MapView, type Selection } from './components/MapView.tsx';
 import { SettingsSheet } from './components/SettingsSheet.tsx';
@@ -9,7 +10,7 @@ import { FERRATAS, ROUTE_SITE } from './data/index.ts';
 import { activeChips, defaultFilters, getBounds, matchSites, type Filters } from './filter.ts';
 import { storage } from './storage/index.ts';
 import { newId, type Completion } from './storage/types.ts';
-import { IconChart, IconFilter, IconGear, IconMountain, IconX, fmtM, fmtMin } from './ui.tsx';
+import { IconChart, IconList, IconFilter, IconGear, IconMountain, IconX, fmtM, fmtMin } from './ui.tsx';
 
 const BOUNDS = getBounds(FERRATAS);
 const DAY = 86_400_000;
@@ -18,7 +19,7 @@ const setPref = (k: string, v: string) => { try { localStorage.setItem(k, v); } 
 
 export function App() {
   const [filters, setFilters] = useState<Filters>(() => defaultFilters(BOUNDS));
-  const [sheet, setSheet] = useState<'filters' | 'settings' | 'stats' | null>(null);
+  const [sheet, setSheet] = useState<'filters' | 'settings' | 'stats' | 'list' | null>(null);
   const [logRouteId, setLogRouteId] = useState<string | null>(null);
   const [selection, setSelection] = useState<Selection | null>(null);
   const [terrain3d, setTerrain3d] = useState(() => pref('terrain3d') === '1');
@@ -53,6 +54,16 @@ export function App() {
     if (c) await storage.removeCompletion(c.id);
     setLogRouteId(null);
     await reload();
+  };
+  /** Un-complete from the check button or the log: instant when there's nothing to lose, otherwise confirm first. */
+  const askUnmark = async (routeId: string, latest?: Completion) => {
+    const c = latest ?? done.get(routeId);
+    if (!c) return;
+    const photos = (await storage.listPhotos(c.id)).length;
+    const hasLog = !!(c.notes?.trim() || c.partners?.trim() || c.conditions?.length || photos);
+    const name = ROUTE_SITE.get(routeId)?.routes.find((r) => r.id === routeId)?.name ?? 'this route';
+    if (hasLog && !confirm(`Mark “${name}” as not done? Its notes${photos ? ` and ${photos} photo${photos > 1 ? 's' : ''}` : ''} will be deleted.`)) return;
+    await unmark(routeId);
   };
   const logCompletion = logRouteId ? done.get(logRouteId) : undefined;
   const logSite = logRouteId ? ROUTE_SITE.get(logRouteId) : undefined;
@@ -89,6 +100,7 @@ export function App() {
           <IconFilter /> Filters {chips.length > 0 && <span className="count">{chips.length}</span>}
           <span className="muted small" aria-label={`${visible.length} of ${FERRATAS.length} sites shown`}>{visible.length}/{FERRATAS.length}</span>
         </button>
+        <button className="bar-btn" onClick={() => setSheet('list')} aria-label="List of all via ferratas"><IconList /></button>
         <button className="bar-btn" onClick={() => setSheet('stats')} aria-label="Stats"><IconChart /></button>
         <button className={`bar-btn${terrain3d ? ' on' : ''}`} aria-pressed={terrain3d} onClick={() => {
           setTerrain3d(!terrain3d);
@@ -100,11 +112,15 @@ export function App() {
       </nav>
 
       {selected && !sheet && !logCompletion && (
-        <SiteSheet site={selected} matching={matches.get(selected.id)} done={done} highlight={selection?.routeId} onMark={mark} onOpenLog={setLogRouteId} onClose={() => setSelection(null)} />
+        <SiteSheet site={selected} matching={matches.get(selected.id)} done={done} highlight={selection?.routeId} onMark={mark} onUnmark={askUnmark} onOpenLog={setLogRouteId} onClose={() => setSelection(null)} />
       )}
       {logCompletion && logSite && (
         <LogSheet key={logCompletion.id} site={logSite} route={logSite.routes.find((r) => r.id === logRouteId)!} completion={logCompletion}
-          onSave={saveCompletion} onRemove={() => unmark(logRouteId!)} onClose={() => setLogRouteId(null)} />
+          onSave={saveCompletion} onRemove={(c) => askUnmark(logRouteId!, c)} onClose={() => setLogRouteId(null)} />
+      )}
+      {sheet === 'list' && (
+        <ListSheet sites={visible} total={FERRATAS.length} matches={matches} done={done} onMark={mark} onUnmark={askUnmark}
+          onOpen={(siteId, routeId) => { setSheet(null); setSelection({ siteId, routeId }); }} onClose={() => setSheet(null)} />
       )}
       {sheet === 'stats' && <StatsSheet completions={completions} onClose={() => setSheet(null)} />}
       {sheet === 'filters' && (

@@ -13,7 +13,7 @@ interface Props {
   route: Route;
   completion: Completion;
   onSave: (c: Completion) => void;
-  onRemove: () => void;
+  onRemove: (latest: Completion) => void;
   onClose: () => void;
 }
 
@@ -132,9 +132,8 @@ export function LogSheet({ site, route, completion, onSave, onRemove, onClose }:
       {error && <p className="small warn">{error}</p>}
       <p className="hint">Saved automatically. Photos are shrunk to 1600 px and included in backups.</p>
 
-      <button className="btn danger" onClick={() => confirm('Remove this completion, its notes and photos?') && onRemove()}>
-        Remove completion
-      </button>
+      {/* flush first so a pending autosave can't re-create the completion after it's removed */}
+      <button className="btn danger" onClick={() => { flush(); onRemove(latest.current); }}>Mark as not done</button>
 
       {viewing && (
         <div className="viewer" onClick={() => setViewing(null)}>

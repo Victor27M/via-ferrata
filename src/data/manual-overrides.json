@@ -3,7 +3,35 @@
   "sites": {
     "baia-de-fier": {
       "routes": [
-        { "id": "baia-de-fier-vanturilor", "coords": [23.75452, 45.19208], "_note": "approximate: source has no GPS, says it starts under the cliff just after Spirala Mica (see via-ferrata.ro route map)" }
+        {
+          "id": "baia-de-fier-vanturilor",
+          "coords": [
+            23.75452,
+            45.19208
+          ],
+          "_note": "approximate: source has no GPS, says it starts under the cliff just after Spirala Mica (see via-ferrata.ro route map)",
+          "coordsApprox": true
+        }
+      ]
+    },
+    "pericolul-caprelor": {
+      "_note": "The page describes 2 routes joining ~25 m up: left B/C with a 'Vietnamese bridge', right also B/C. Existing route id kept as the left variant so earlier completions stay valid.",
+      "routes": [
+        {
+          "id": "pericolul-caprelor",
+          "name": "Varianta stângă (pod vietnamez)"
+        },
+        {
+          "id": "pericolul-caprelor-dreapta",
+          "name": "Varianta dreaptă",
+          "grade": "B/C",
+          "lengthM": null,
+          "elevationM": 60,
+          "ferrataMin": 20,
+          "totalMin": 40,
+          "ferrataRaw": "15-20 min",
+          "totalRaw": null
+        }
       ]
     }
   },

@@ -51,7 +51,7 @@ function routesData(sites: Ferrata[], matches: Props['matches'], doneRoutes: Set
     const rs = routePoints(s);
     const pos = spread(rs.map((r) => r.coords!));
     return rs.flatMap((r, i) => (matches.get(s.id)?.has(r.id)
-      ? [point(pos[i], { id: r.id, siteId: s.id, name: `${r.name} · ${r.grade}`, letter: letterOf(r.grade), done: doneRoutes.has(r.id) })]
+      ? [point(pos[i], { id: r.id, siteId: s.id, name: `${r.name} · ${r.grade}`, letter: letterOf(r.grade), done: doneRoutes.has(r.id), approx: !!r.coordsApprox })]
       : []));
   }));
 }
@@ -93,7 +93,8 @@ function addPins(m: MLMap, id: string, source: string, filter: ExpressionSpecifi
     paint: {
       'circle-radius': radius,
       'circle-color': ['case', ['get', 'done'], WHITE, BLACK],
-      'circle-stroke-color': WHITE,
+      // approximate positions (no published start) get a grey ring
+      'circle-stroke-color': ['case', ['boolean', ['get', 'approx'], false], '#7a7a7a', WHITE],
       'circle-stroke-width': 1.75,
     } });
   m.addLayer({ id: `${id}-check`, type: 'symbol', source, filter: done, ...zoom,
@@ -218,7 +219,8 @@ export function MapView({ sites, matches, doneRoutes, doneSites, selected, terra
     const spreadSite = isSpread(s);
     const center = route?.coords ?? (spreadSite ? centroid(routePoints(s).map((r) => r.coords!)) : s.coords);
     const zoom = Math.max(m.getZoom(), route ? 16.5 : spreadSite ? ROUTES_ZOOM + 1 : 10.5);
-    const padding = innerWidth >= 768 ? { left: 420, top: 0, right: 0, bottom: 0 } : { bottom: innerHeight * 0.5, top: 0, left: 0, right: 0 };
+    // keep the pin/region in the strip above the bottom sheet (which can be up to ~82% tall)
+    const padding = innerWidth >= 768 ? { left: 420, top: 0, right: 0, bottom: 0 } : { bottom: innerHeight * 0.66, top: 0, left: 0, right: 0 };
     m.easeTo({ center, zoom, padding });
   }, [selected?.siteId, selected?.routeId]);
 
