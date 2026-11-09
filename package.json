@@ -4,12 +4,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && tsc --noEmit -p tsconfig.sw.json && vite build",
     "preview": "vite preview --host",
     "icons": "node scripts/icons.ts",
     "scrape": "node scripts/scrape.ts",
     "scrape:cached": "node scripts/scrape.ts --cached",
-    "check": "node scripts/parse.check.ts && node src/filter.check.ts"
+    "check": "node scripts/parse.check.ts && node src/filter.check.ts && node src/tiles.check.ts"
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.16",
@@ -20,7 +20,11 @@
     "cheerio": "^1.2.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.7",
-    "vite-plugin-pwa": "^2.0.0"
+    "vite-plugin-pwa": "^2.0.0",
+    "workbox-core": "^7.4.1",
+    "workbox-precaching": "^7.4.1",
+    "workbox-routing": "^7.4.1",
+    "workbox-strategies": "^7.4.1"
   },
   "dependencies": {
     "dexie": "^4.4.7",

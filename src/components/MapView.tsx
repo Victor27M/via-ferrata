@@ -3,13 +3,12 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import { useEffect, useRef } from 'react';
 import type { Ferrata } from '../data/types.ts';
+import { DEM_MAXZOOM, DEM_TEMPLATE, STYLE_URL } from '../tiles.ts';
 import { GRADE_COLORS, maxGrade } from '../ui.tsx';
 
 // MapLibre resolves its worker relative to its own module, which Vite's bundling breaks.
 setWorkerUrl(workerUrl);
 
-const STYLE = 'https://tiles.openfreemap.org/styles/dark';
-const DEM = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
 const ROMANIA: [[number, number], [number, number]] = [[20.2, 43.6], [29.8, 48.3]];
 
 interface Props {
@@ -61,14 +60,14 @@ export function MapView({ sites, doneSites, selectedId, terrain3d, onSelect }: P
   useEffect(() => {
     const m = new MLMap({
       container: el.current!,
-      style: STYLE,
+      style: STYLE_URL,
       bounds: ROMANIA,
       fitBoundsOptions: { padding: 20 },
       maxPitch: 80,
       attributionControl: false,
     });
     map.current = m;
-    if (import.meta.env.DEV) Object.assign(window, { __map: m }); // for local e2e checks
+    if (import.meta.env.DEV || location.search.includes('debug')) Object.assign(window, { __map: m }); // e2e checks / on-device debugging
     m.addControl(new AttributionControl({ compact: true }), 'bottom-right');
     m.addControl(new NavigationControl({ visualizePitch: true }), 'top-right');
     m.addControl(new GeolocateControl({ positionOptions: { enableHighAccuracy: true }, trackUserLocation: true }), 'top-right');
@@ -77,7 +76,7 @@ export function MapView({ sites, doneSites, selectedId, terrain3d, onSelect }: P
       const { sites, doneSites } = latest.current;
       const firstSymbol = m.getStyle().layers.find((l) => l.type === 'symbol')?.id;
 
-      m.addSource('dem', { type: 'raster-dem', tiles: [DEM], tileSize: 256, maxzoom: 15, encoding: 'terrarium',
+      m.addSource('dem', { type: 'raster-dem', tiles: [DEM_TEMPLATE], tileSize: 256, maxzoom: DEM_MAXZOOM, encoding: 'terrarium',
         attribution: '<a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md">Terrain: Mapzen/AWS</a>' });
       m.addLayer({ id: 'hillshade', type: 'hillshade', source: 'dem',
         paint: { 'hillshade-exaggeration': 0.85, 'hillshade-shadow-color': '#000', 'hillshade-highlight-color': 'rgba(214,226,206,0.32)', 'hillshade-accent-color': '#14251b' } }, firstSymbol);

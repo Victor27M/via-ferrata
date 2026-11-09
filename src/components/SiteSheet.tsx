@@ -2,6 +2,7 @@ import type { Ferrata, Route } from '../data/types.ts';
 import type { Completion } from '../storage/types.ts';
 import { GradeBadge, IconCheck, IconExternal, IconNote, IconRoute, fmtDate, fmtM, fmtMin, today } from '../ui.tsx';
 import { BottomSheet } from './BottomSheet.tsx';
+import { OfflineArea } from './OfflineArea.tsx';
 import { Weather } from './Weather.tsx';
 
 interface Props {
@@ -75,6 +76,9 @@ export function SiteSheet({ site, matching, done, onMark, onOpenLog, onClose }: 
 
       <h3 className="label">Weather · next 5 days</h3>
       <Weather site={site} />
+
+      <h3 className="label">Offline map</h3>
+      <OfflineArea site={site} />
 
       <a className="source" href={site.sourceUrl} target="_blank" rel="noopener">
         Full description on via-ferrata.ro <IconExternal />

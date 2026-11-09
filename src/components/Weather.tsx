@@ -43,7 +43,7 @@ export function Weather({ site }: { site: Ferrata }) {
         })}
       </div>
       <p className="muted small">
-        {stale ? 'Offline · ' : ''}Updated {ago(fc.fetchedAt)} · gusts in km/h · <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>
+        {stale || !navigator.onLine ? 'Offline · ' : ''}Updated {ago(fc.fetchedAt)} · gusts in km/h · <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>
       </p>
     </>
   );

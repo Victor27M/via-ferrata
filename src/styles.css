@@ -198,3 +198,12 @@ button.route-main { text-align: left; }
 .ybar.on .ybar-col { background: var(--accent); }
 .ybar-num { font-weight: 700; font-size: 13px; }
 .brand { text-align: center; margin-top: 24px; }
+
+/* ---------- phase 4 ---------- */
+.offline .btn { width: 100%; }
+.offline .progress { margin: 4px 0 8px; }
+.offline-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.offline-row .small { color: var(--ok); }
+.btn:disabled { opacity: 0.5; }
+.areas { list-style: none; margin: 0 0 8px; padding: 0; }
+.areas li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }

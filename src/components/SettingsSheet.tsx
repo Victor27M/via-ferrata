@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DATA } from '../data/index.ts';
+import { deleteArea, fmtBytes, useOffline } from '../offline.ts';
 import { storage } from '../storage/index.ts';
 import type { Backup } from '../storage/types.ts';
 import { IconExternal, today } from '../ui.tsx';
@@ -15,6 +16,9 @@ interface Props {
 
 export function SettingsSheet({ lastBackup, completionCount, onBackedUp, onImported, onClose }: Props) {
   const [msg, setMsg] = useState('');
+  const { areas } = useOffline();
+  const [usage, setUsage] = useState<StorageEstimate>();
+  useEffect(() => void navigator.storage?.estimate?.().then(setUsage), [areas]);
 
   async function exportBackup() {
     const json = JSON.stringify(await storage.exportBackup());
@@ -68,6 +72,28 @@ export function SettingsSheet({ lastBackup, completionCount, onBackedUp, onImpor
         </label>
       </div>
       {msg && <p className="small">{msg}</p>}
+
+      <h3 className="label">Offline maps</h3>
+      {areas.length === 0 ? (
+        <p className="muted small">None yet. Open a ferrata and tap “Download area for offline”.</p>
+      ) : (
+        <ul className="areas">
+          {[...areas].sort((a, b) => a.name.localeCompare(b.name)).map((a) => (
+            <li key={a.id}>
+              <div>
+                <div>{a.name}</div>
+                <div className="muted small">{fmtBytes(a.bytes)} · {a.tiles} tiles · {new Date(a.createdAt).toLocaleDateString()}</div>
+              </div>
+              <button className="link" onClick={() => confirm(`Delete offline map “${a.name}”?`) && deleteArea(a.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {usage?.usage != null && (
+        <p className="muted small">
+          This app uses {fmtBytes(usage.usage)}{usage.quota ? ` of ${fmtBytes(usage.quota)} available` : ''} (maps, photos, app).
+        </p>
+      )}
 
       <h3 className="label">About</h3>
       <p className="small">

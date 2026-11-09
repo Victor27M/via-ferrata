@@ -87,7 +87,7 @@ export function App() {
       <nav className="bar">
         <button className="bar-btn grow" onClick={() => setSheet('filters')}>
           <IconFilter /> Filters {chips.length > 0 && <span className="count">{chips.length}</span>}
-          <span className="muted small">{visible.length}/{FERRATAS.length} sites</span>
+          <span className="muted small" aria-label={`${visible.length} of ${FERRATAS.length} sites shown`}>{visible.length}/{FERRATAS.length}</span>
         </button>
         <button className="bar-btn" onClick={() => setSheet('stats')} aria-label="Stats"><IconChart /></button>
         <button className={`bar-btn${terrain3d ? ' on' : ''}`} aria-pressed={terrain3d} onClick={() => {
